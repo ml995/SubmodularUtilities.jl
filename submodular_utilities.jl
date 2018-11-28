@@ -41,7 +41,6 @@ function pipage_round(x)
     
         try
             while length(T) > 0
-    
                 i, j = T[1], T[2]
                 if y[i] + y[j] < 1
                     p = y[j] / (y[i] + y[j])
