@@ -3,7 +3,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 module SubmodularUtilities
-export lazy_greedy, pipage_round
+export lazy_greedy, pipage_round, random_round
+export get_random_evaluation_of_multilinear_extension, get_random_gradient_of_multilinear_extension
 
 using Base.Order
 using DataStructures
@@ -77,7 +78,6 @@ function pipage_round(x)
         end
         return y
     end
-
     function regularize_answer(ans)
         pp = pipage_round_raw(ans)
         pp[pp .< 1] = 0.
@@ -86,5 +86,26 @@ function pipage_round(x)
     px = regularize_answer(x)
     v = [i for i in 1:length(x) if px[i] != 0]
     return v
+end
+
+function random_round(x)
+    p = rand(size(x));
+    return find(p .< x)
+end
+
+function get_random_evaluation_of_multilinear_extension(f_discrete)
+    return x->f_discrete(random_round(x))
+end
+
+function get_random_gradient_of_multilinear_extension(f_discrete)
+    function stochastic_gradient(x)
+        S = random_round(x);
+        grad = zeros(x);
+        for i in 1:length(x)
+            grad[i] = f_discrete(vcat(S, i)) - f_discrete(setdiff(S, i));
+        end
+        return grad
+    end
+    return stochastic_gradient
 end
 end
