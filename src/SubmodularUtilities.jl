@@ -118,11 +118,36 @@ function random_round(x)
 end
 
 export get_random_evaluation_of_multilinear_extension
+"""
+    get_random_evaluation_of_multilinear_extension(f_discrete)
+
+The input `f_discrete` is assumed to be a monotone submodular function defined 
+on the ground set `1:n`, where n is some positive integer. Given an array `T` 
+whose elements are chosen from `1:n`, `f_discrete(T)` is the function value of 
+the subset `T`. `get_random_evaluation_of_multilinear_extension` returns a 
+function that takes a size-n array `x` as input and outputs an unbiased estimate of 
+the function value of the multilinear extension of `f_discrete` at `x`. In other
+ words, the output is a function that maps `x` to `f_discrete(random_round(x))`.
+"""
 function get_random_evaluation_of_multilinear_extension(f_discrete)
     return x->f_discrete(random_round(x))
 end
 
 export get_random_gradient_of_multilinear_extension
+"""
+    get_random_gradient_of_multilinear_extension(f_discrete)
+
+The input `f_discrete` is assumed to be a monotone submodular function defined 
+on the ground set `1:n`, where n is some positive integer. Given an array `T` 
+whose elements are chosen from `1:n`, `f_discrete(T)` is the function value of 
+the subset `T`. `get_random_gradient_of_multilinear_extension` returns a 
+function that takes a size-n array `x` as input and outputs an unbiased estimate of 
+the gradient of the multilinear extension of `f_discrete` at `x`. 
+
+In other words, the output function first computes `S = random_round(x)`. Then 
+the i-th partial derivative is \$f(S\cup \{i\}) - f(S\setminus \{i\})\$, where 
+\$f\$ denotes `f_discrete`.
+"""
 function get_random_gradient_of_multilinear_extension(f_discrete)
     function stochastic_gradient(x)
         S = random_round(x);
