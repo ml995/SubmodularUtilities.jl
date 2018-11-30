@@ -4,7 +4,7 @@ Our implementation was developed under Julia 0.6.2. The algorithms that have bee
 
 If you use our code in your project, we would be grate if you cite
 
-#### `[![DOI](https://zenodo.org/badge/159565266.svg)](https://zenodo.org/badge/latestdoi/159565266)`
+#### [![DOI](https://zenodo.org/badge/159565266.svg)](https://zenodo.org/badge/latestdoi/159565266)
 
 ## Maximization
 
