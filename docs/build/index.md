@@ -52,7 +52,7 @@ This subset contains functions related to rounding a fractional vector between 0
 pipage_round(x)
 ```
 
-Given an array x whose every entry is between 0 and 1, round x into a binary vector using the pipage rounding algorithm presented in [^ccpv].
+Given an array `x` whose every entry is between 0 and 1, round x into a binary vector using the pipage rounding algorithm presented in [^ccpv].
 
 [^ccpv]: Calinescu, Gruia, et al. "Maximizing a monotone submodular function subject to a matroid constraint." SIAM Journal on Computing 40.6 (2011): 1740-1766.
 
@@ -73,7 +73,7 @@ Given an array x whose every entry is between 0 and 1, round x into a binary vec
 random_round(x)
 ```
 
-Given an array x whose every entry is between 0 and 1, round x into a binary vector.  The i-th entry of the output vector is 1 with probability x[i] and is 0 otherwise.
+Given an array `x` whose every entry is between 0 and 1, round `x` into a binary vector.  The i-th entry of the output vector is 1 with probability `x[i]` and is 0 otherwise.
 
 
 <a target='_blank' href='https://github.com/lchen91/Submodular_Utilities/blob/master/src/SubmodularUtilities.jl#L109-L114' class='documenter-source'>source</a><br>
