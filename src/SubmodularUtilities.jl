@@ -30,6 +30,14 @@ function lazy_greedy(f, ground_set, k)
 end
 
 export pipage_round
+"""
+    pipage_round(x)
+
+Given an array x whose every entry is between 0 and 1, round x into a binary vector
+using the pipage rounding algorithm presented in [^ccpv].
+
+[^ccpv]: Calinescu, Gruia, et al. "Maximizing a monotone submodular function subject to a matroid constraint." SIAM Journal on Computing 40.6 (2011): 1740-1766.
+"""
 function pipage_round(x)
     function pipage_round_raw(x)
         y = copy(x)
