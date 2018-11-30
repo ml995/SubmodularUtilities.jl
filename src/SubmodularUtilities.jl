@@ -7,6 +7,15 @@ module SubmodularUtilities
 export lazy_greedy
 using Base.Order
 using DataStructures
+"""
+    lazy_greedy(f, ground_set, k)
+
+`ground_set` should be an array of unique integers, which denotes the ground 
+set of monotone submodular function `f`. `f` represents a monotone submodular 
+function. If `T` is an array whose elements constitute a subset of `ground_set`, 
+`f(T)` is the function value of `T`. `k` is the cardinality constraint. 
+`lazy_greedy` outputs an array of length `k` using the lazy greedy algorithm.
+"""
 function lazy_greedy(f, ground_set, k)
     uppers = [(Inf, i) for i in ground_set]
     myorder = ReverseOrdering(By(x->x[1]))
@@ -33,7 +42,7 @@ export pipage_round
 """
     pipage_round(x)
 
-Given an array x whose every entry is between 0 and 1, round x into a binary vector
+Given an array `x` whose every entry is between 0 and 1, round x into a binary vector
 using the pipage rounding algorithm presented in [^ccpv].
 
 [^ccpv]: Calinescu, Gruia, et al. "Maximizing a monotone submodular function subject to a matroid constraint." SIAM Journal on Computing 40.6 (2011): 1740-1766.
@@ -100,8 +109,8 @@ export random_round
 """
     random_round(x)
 
-Given an array x whose every entry is between 0 and 1, round x into a binary vector. 
-The i-th entry of the output vector is 1 with probability x[i] and is 0 otherwise.
+Given an array `x` whose every entry is between 0 and 1, round `x` into a binary vector. 
+The i-th entry of the output vector is 1 with probability `x[i]` and is 0 otherwise.
 """
 function random_round(x)
     p = rand(size(x));
