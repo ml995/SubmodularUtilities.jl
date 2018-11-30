@@ -106,8 +106,11 @@ end # end of module Rounding
 
 # Multilinear Extension
 module Multilinear
+
 export get_random_evaluation_of_multilinear_extension
 export get_random_gradient_of_multilinear_extension
+
+using ..Rounding
 
 function get_random_evaluation_of_multilinear_extension(f_discrete)
     return x->f_discrete(random_round(x))
