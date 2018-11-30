@@ -145,8 +145,8 @@ function that takes a size-n array `x` as input and outputs an unbiased estimate
 the gradient of the multilinear extension of `f_discrete` at `x`. 
 
 In other words, the output function first computes `S = random_round(x)`. Then 
-the i-th partial derivative is \$f(S\cup \{i\}) - f(S\setminus \{i\})\$, where 
-\$f\$ denotes `f_discrete`.
+the i-th partial derivative is 
+`f_discrete(vcat(S, i)) - f_discrete(setdiff(S, i))`.
 """
 function get_random_gradient_of_multilinear_extension(f_discrete)
     function stochastic_gradient(x)
