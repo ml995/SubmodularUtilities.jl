@@ -3,14 +3,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 module SubmodularUtilities
-export Maximization
-export Rounding
-export Multilinear
-export Functions
 
-module Maximization
 export lazy_greedy
-
 using Base.Order
 using DataStructures
 function lazy_greedy(f, ground_set, k)
@@ -34,12 +28,8 @@ function lazy_greedy(f, ground_set, k)
     end
     return s
 end
-end # end of module Maximization
 
-module Rounding
 export pipage_round
-export random_round
-
 function pipage_round(x)
     function pipage_round_raw(x)
         y = copy(x)
@@ -98,24 +88,24 @@ function pipage_round(x)
     return v
 end
 
+export random_round
+"""
+    random_round(x)
+
+Given an array x whose every entry is between 0 and 1, round x into a binary vector. 
+The i-th entry of the output vector is 1 with probability x[i] and is 0 otherwise.
+"""
 function random_round(x)
     p = rand(size(x));
     return find(p .< x)
 end
-end # end of module Rounding
-
-# Multilinear Extension
-module Multilinear
 
 export get_random_evaluation_of_multilinear_extension
-export get_random_gradient_of_multilinear_extension
-
-using ..Rounding
-
 function get_random_evaluation_of_multilinear_extension(f_discrete)
     return x->f_discrete(random_round(x))
 end
 
+export get_random_gradient_of_multilinear_extension
 function get_random_gradient_of_multilinear_extension(f_discrete)
     function stochastic_gradient(x)
         S = random_round(x);
@@ -127,13 +117,8 @@ function get_random_gradient_of_multilinear_extension(f_discrete)
     end
     return stochastic_gradient
 end
-end # end of module Multilinear
 
-# Submodular Functions
-module Functions
 export get_function_exemplar_based_clustering
-export get_function_active_set_selection
-
 function get_function_exemplar_based_clustering(data)
     function f_exemplar(S)
         n_V = size(data)[1];
@@ -146,6 +131,7 @@ function get_function_exemplar_based_clustering(data)
     return f_exemplar
 end
 
+export get_function_active_set_selection
 function get_function_active_set_selection(data; sigma = 1., h = 0.75)
     n_attr = size(data)[2];
     cov_matrix = zeros(n_attr, n_attr);
@@ -165,5 +151,4 @@ function get_function_active_set_selection(data; sigma = 1., h = 0.75)
     end
     return f_active_set_discrete
 end
-end # end of module Functions
 end # end of module SubmodularUtilities
