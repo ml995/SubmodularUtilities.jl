@@ -31,10 +31,14 @@ random_round(x)
 This subset contains functions related to multilinear extension of submodular set functions.
 
 ### Random Evaluation of Multilinear Extension
-`get_random_evaluation_of_multilinear_extension`
+```@docs
+get_random_evaluation_of_multilinear_extension
+```
 
 ### Random Gradient of Multilinear Extension
-`get_random_gradient_of_multilinear_extension`
+```@docs
+get_random_gradient_of_multilinear_extension
+```
 
 ## Submodular Functions
 
