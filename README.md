@@ -2,7 +2,9 @@
 
 Our implementation was developed under Julia 0.6.2. The algorithms that have been implemented are listed as below.
 
-If you use our code in your project, we would be grate if you cite
+## How to Cite Submodular Utilities
+
+If you use our code in your project, we would be grateful if you cite
 
 #### [![DOI](https://zenodo.org/badge/159565266.svg)](https://zenodo.org/badge/latestdoi/159565266)
 
