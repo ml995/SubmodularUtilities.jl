@@ -3,8 +3,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 module SubmodularUtilities
-export lazy_greedy, pipage_round, random_round
-export get_random_evaluation_of_multilinear_extension, get_random_gradient_of_multilinear_extension
+export Maximization
+export Rounding
+export Multilinear
+export Functions
+
+module Maximization
+export lazy_greedy
 
 using Base.Order
 using DataStructures
@@ -29,6 +34,11 @@ function lazy_greedy(f, ground_set, k)
     end
     return s
 end
+end # end of module Maximization
+
+module Rounding
+export pipage_round
+export random_round
 
 function pipage_round(x)
     function pipage_round_raw(x)
@@ -92,6 +102,12 @@ function random_round(x)
     p = rand(size(x));
     return find(p .< x)
 end
+end # end of module Rounding
+
+# Multilinear Extension
+module Multilinear
+export get_random_evaluation_of_multilinear_extension
+export get_random_gradient_of_multilinear_extension
 
 function get_random_evaluation_of_multilinear_extension(f_discrete)
     return x->f_discrete(random_round(x))
@@ -108,4 +124,43 @@ function get_random_gradient_of_multilinear_extension(f_discrete)
     end
     return stochastic_gradient
 end
+end # end of module Multilinear
+
+# Submodular Functions
+module Functions
+export get_function_exemplar_based_clustering
+export get_function_active_set_selection
+
+function get_function_exemplar_based_clustering(data)
+    function f_exemplar(S)
+        n_V = size(data)[1];
+        function L(S)
+            return sum([minimum([norm(data[e, :] - (v > 0 ? data[v, :] : 0))^2 for v in S])
+                for e in 1:n_V]) / n_V
+        end
+        return L([0]) - L(vcat(S, 0))
+    end
+    return f_exemplar
 end
+
+function get_function_active_set_selection(data; sigma = 1., h = 0.75)
+    n_attr = size(data)[2];
+    cov_matrix = zeros(n_attr, n_attr);
+    for i in 1:n_attr
+        for j in 1:i
+            cov_matrix[i, j] = exp(-norm(data[:, i] - data[:, j])^2 / h^2)
+            if j != i
+                cov_matrix[j, i] = cov_matrix[i, j]
+            end
+        end
+    end
+    function f_active_set_discrete(S)
+        if isempty(S)
+            return 0.;
+        end
+        return 0.5 * log(det(eye(length(S)) + cov_matrix[S, S] / sigma^2))
+    end
+    return f_active_set_discrete
+end
+end # end of module Functions
+end # end of module SubmodularUtilities
