@@ -45,7 +45,11 @@ get_random_gradient_of_multilinear_extension
 This subset contains several examples of submodular functions. Given input data, the functions named `get_function_...` below return a submodular function. 
 
 ### Exemplar-Based Clustering
- `get_function_exemplar_based_clustering`: generates objective function of exemplar-based clustering.
+```@docs
+get_function_exemplar_based_clustering
+```
 
 ### Active Set Selection
-`get_function_active_set_selection`: generates objective function of active set selection.
+```@docs
+get_function_active_set_selection
+```

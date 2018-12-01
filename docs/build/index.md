@@ -139,14 +139,36 @@ This subset contains several examples of submodular functions. Given input data,
 
 ### Exemplar-Based Clustering
 
+<a id='SubmodularUtilities.get_function_exemplar_based_clustering' href='#SubmodularUtilities.get_function_exemplar_based_clustering'>#</a>
+**`SubmodularUtilities.get_function_exemplar_based_clustering`** &mdash; *Function*.
 
-`get_function_exemplar_based_clustering`: generates objective function of exemplar-based clustering.
+
+
+```
+get_function_exemplar_based_clustering(data)
+```
+
+Returns the objective function of exemplar-based clustering defined on the  ground set `1:size(data)[1]`. The argument `data` is a 2-dimensional array.  Each row represents a data point and each column represents an attribute. 
+
+
+<a target='_blank' href='https://github.com/lchen91/Submodular_Utilities/blob/master/src/SubmodularUtilities.jl#L164-L170' class='documenter-source'>source</a><br>
 
 
 <a id='Active-Set-Selection-1'></a>
 
 ### Active Set Selection
 
+<a id='SubmodularUtilities.get_function_active_set_selection' href='#SubmodularUtilities.get_function_active_set_selection'>#</a>
+**`SubmodularUtilities.get_function_active_set_selection`** &mdash; *Function*.
 
-`get_function_active_set_selection`: generates objective function of active set selection.
+
+
+```
+get_function_active_set_selection(data; sigma = 1., h = 0.75)
+```
+
+Returns the objective function of active set selection defined on the ground set `1:size(data)[2]`. The argument `data` is a 2-dimensional array.  Each row represents a data point and each column represents an attribute.  The covariance matrix uses a Gaussian kernel  `exp(-norm(data[:, i] - data[:, j])^2 / h^2)`. The function value of the  objective function evaluated at the subset `S` is  `0.5 * log(det(eye(length(S)) + cov_matrix[S, S] / sigma^2))`.
+
+
+<a target='_blank' href='https://github.com/lchen91/Submodular_Utilities/blob/master/src/SubmodularUtilities.jl#L184-L194' class='documenter-source'>source</a><br>
 

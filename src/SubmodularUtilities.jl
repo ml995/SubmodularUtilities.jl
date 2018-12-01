@@ -161,6 +161,13 @@ function get_random_gradient_of_multilinear_extension(f_discrete)
 end
 
 export get_function_exemplar_based_clustering
+"""
+    get_function_exemplar_based_clustering(data)
+
+Returns the objective function of exemplar-based clustering defined on the 
+ground set `1:size(data)[1]`. The argument `data` is a 2-dimensional array. 
+Each row represents a data point and each column represents an attribute. 
+"""
 function get_function_exemplar_based_clustering(data)
     function f_exemplar(S)
         n_V = size(data)[1];
@@ -174,6 +181,17 @@ function get_function_exemplar_based_clustering(data)
 end
 
 export get_function_active_set_selection
+"""
+    get_function_active_set_selection(data; sigma = 1., h = 0.75)
+
+Returns the objective function of active set selection defined on the ground set
+`1:size(data)[2]`. The argument `data` is a 2-dimensional array. 
+Each row represents a data point and each column represents an attribute. 
+The covariance matrix uses a Gaussian kernel 
+`exp(-norm(data[:, i] - data[:, j])^2 / h^2)`. The function value of the 
+objective function evaluated at the subset `S` is 
+`0.5 * log(det(eye(length(S)) + cov_matrix[S, S] / sigma^2))`.
+"""
 function get_function_active_set_selection(data; sigma = 1., h = 0.75)
     n_attr = size(data)[2];
     cov_matrix = zeros(n_attr, n_attr);
