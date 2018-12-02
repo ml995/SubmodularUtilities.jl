@@ -38,6 +38,147 @@ function lazy_greedy(f, ground_set, k)
     return s
 end
 
+mutable struct FPL
+    x
+    eta
+    accumulated_gradient
+    n0
+end
+
+export Constraint
+"""
+    Constraint
+
+The constraints are A*x sense b and lb <= x <= ub. 
+`sense` is a vector of constraint sense characters `<`, `=`, and `>`.
+`A` is a 2-dimensional array, which denotes the constraint matrix.
+`b` is the right-hand side vector.
+"""
+struct Constraint
+    A
+    sense
+    b
+    lb
+    ub
+end
+
+using MathProgBase, Clp
+function update(fpl, gradient, constraint)
+    fpl.accumulated_gradient .-= gradient
+    sol = linprog(fpl.eta * fpl.accumulated_gradient + fpl.n0, 
+        constraint.A, constraint.sense, constraint.b, constraint.lb, constraint.ub, ClpSolver())
+    if sol.status == :Optimal
+        fpl.x = sol.sol
+    else
+        error("No solution was found.")
+    end
+end
+
+function get_vector(fpl)
+    return fpl.x
+end
+
+export meta_frank_wolfe
+"""
+    meta_frank_wolfe(dim_x, f_list, g_list, eta, K, constraint; variance_reduction = false, n0 = rand(dim_x))
+
+Args:
+- `dim_x`: The dimension of the variables that we optimize.
+- `f_list`: List of continuous DR-submodular functions `[f_1, f_2, ..., f_T]`.
+- `g_list`: List of (unbiased estimates of) the gradients of functions in `f_list`.
+- `eta`: This implementation uses Follow-Perturbed-Leader (FPL) for linear losses (which can be found in Hazan's book Introduction to Online Convex Optimization) as the online linear maximization algorithm. `eta` is the parameter of FPL.
+- `K`: Number of instances of the chosen online linear maximization algorithm.
+- `constraint`: Constraint set. It is an object of type `Constraint`.
+- `variance_reduction`: Boolean variable which is `true` if variance reduction is enabled
+- `n0`: the value of n0 in FPL for linear losses.
+
+Returns:
+- Array of rewards `[f_1(x_1), f_2(x_2), ..., f_T(f_T)]`.
+"""
+function meta_frank_wolfe(dim_x, f_list, g_list, eta, K, constraint; 
+    variance_reduction = false, n0 = rand(dim_x))
+    sol = linprog(-n0, 
+        constraint.A, constraint.sense, constraint.b, constraint.lb, constraint.ub, ClpSolver())
+    if sol.status != :Optimal
+        error("No solution was found.")
+    end
+    x0 = sol.sol
+    fpl = [FPL(x0, eta, zeros(dim_x), n0) for k in 1:K]
+    @assert length(f_list) == length(g_list)
+    T = length(f_list)
+    reward = zeros(T)
+
+    for t in 1:T
+        v = [get_vector(fpl[k]) for k in 1:K]
+        x = zeros(K + 1, dim_x)
+        for k in 1:K
+            x[k + 1, :] = x[k, :] + v[k] / K
+        end
+        reward[t] = f_list[t](x[K + 1, :])
+        d = zeros(dim_x)
+        for k in 1:K
+            if variance_reduction
+                rho = 0.5 * k^(-2/3)
+                d = (1 - rho) * d + rho * g_list[t](x[k, :])
+            else
+                d = g_list[t](x[k, :])
+            end
+            update(fpl[k], d, constraint)
+        end
+    end
+    return reward
+end
+
+using Ipopt
+export get_projection_operator
+"""
+    get_projection_operator(constraint; dim_x = size(constraint.A)[2])
+
+Args:
+- `constraint`: Constraint set. It is an object of type `Constraint`.
+- `dim_x`: the dimension of the point. The default value is deduced from the size of `constraint.A`.
+
+Returns:
+A function `projection` such that `projection(x)` outputs the projection of `x`
+onto the set `constraint`.
+"""
+function get_projection_operator(constraint; dim_x = size(constraint.A)[2])
+    function projection(x0)
+        sol = quadprog(-x0, eye(dim_x), constraint.A, constraint.sense, constraint.b, constraint.lb, constraint.ub, IpoptSolver(print_level=0))
+        if sol.status == :Optimal
+            return sol.sol
+        end
+        error("No projection of $x0 is found.")
+    end
+    return projection
+end
+
+export online_gradient_ascent
+"""
+    online_gradient_ascent(x0, f_list, g_list, projection; step_size = t->1/t)
+
+Args: 
+- `x0`: the initial value
+- `f_list`: List of continuous DR-submodular functions `[f_1, f_2, ..., f_T]`.
+- `g_list`: List of (unbiased estimates of) the gradients of functions in `f_list`.
+- `projection`: Projection operator of the constraint set. You may want to get it by calling `get_projection_operator`.
+- `step_size`: A function such that `step_size(t)` is the step size at the t-th iteration.
+
+Returns:
+- Array of rewards `[f_1(x_1), f_2(x_2), ..., f_T(f_T)]`.
+"""
+function online_gradient_ascent(x0, f_list, g_list, projection; step_size = t->1/t)
+    @assert length(f_list) == length(g_list)
+    T = length(f_list)
+    reward = zeros(T)
+    x = copy(x0)
+    for t in 1:T
+        reward[t] = f_list[t](x)
+        x = projection(x + g_list[t](x) * step_size(t))
+    end
+    return reward
+end
+
 export pipage_round
 """
     pipage_round(x)
