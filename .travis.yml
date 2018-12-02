@@ -1,5 +1,3 @@
-before_install:
-  - sudo apt-get install julia
 jobs:
   include:
     - stage: "Documentation"
