@@ -117,7 +117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "SubmodularUtilities.jl",
     "title": "SubmodularUtilities.pipage_round",
     "category": "method",
-    "text": "pipage_round(x)\n\nGiven an array x whose every entry is between 0 and 1, round x into a binary vector using the pipage rounding algorithm presented in [ccpv].\n\n[ccpv]: Calinescu, Gruia, et al. \"Maximizing a monotone submodular function subject to a matroid constraint.\" SIAM Journal on Computing 40.6 (2011): 1740-1766.\n\n\n\n\n\n"
+    "text": "pipage_round(x)\n\nGiven an array x whose every entry is between 0 and 1, round x into a binary vector using the pipage rounding algorithm presented in [CCPV].\n\n[CCPV]: Calinescu, Gruia, et al. \"Maximizing a monotone submodular function subject to a matroid constraint.\" SIAM Journal on Computing 40.6 (2011): 1740-1766.\n\n\n\n\n\n"
 },
 
 {
