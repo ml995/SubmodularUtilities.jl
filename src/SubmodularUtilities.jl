@@ -4,6 +4,8 @@
 
 module SubmodularUtilities
 
+using LinearAlgebra
+
 export lazy_greedy
 using Base.Order
 using DataStructures
