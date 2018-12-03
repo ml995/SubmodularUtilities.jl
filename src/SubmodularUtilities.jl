@@ -139,7 +139,7 @@ Args:
 - `dim_x`: the dimension of the point. The default value is deduced from the size of `constraint.A`.
 
 Returns:
-A function `projection` such that `projection(x)` outputs the projection of `x`
+- A function `projection` such that `projection(x)` outputs the projection of `x`
 onto the set `constraint`.
 """
 function get_projection_operator(constraint; dim_x = size(constraint.A)[2])
