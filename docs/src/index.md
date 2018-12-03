@@ -1,4 +1,4 @@
-# Documentation of SubmodularUtilities.jl
+# SubmodularUtilities.jl
 
 ## Maximization
 

@@ -1,8 +1,8 @@
 # Submodular Utilities
 
-**Documentation can be found at** [![DOI](img/docs-latest-blue.svg)](docs/build/index.md).
+**Documentation can be found at** [![DOI](img/docs-latest-blue.svg)](https://lchen91.github.io/Submodular_Utilities/latest/index.html).
 
-Our implementation was developed under Julia v0.6.4. It may work for other Julia versions. We are working to move our code to Julia v0.7/1.0.
+Our implementation was developed under Julia v0.7/v1.0.
 
 ## How to Cite Submodular Utilities
 
