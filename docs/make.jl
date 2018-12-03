@@ -10,7 +10,7 @@ makedocs(sitename="SubmodularUtilities.jl", doctest = false)
 # )
 
 deploydocs(
-    repo   = "github.com/lchen91/Submodular_Utilities.git",
+    repo   = "github.com/lchen91/SubmodularUtilities.jl.git",
     branch = "gh-pages",
     devbranch = "master",
 )
