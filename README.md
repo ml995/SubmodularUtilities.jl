@@ -1,4 +1,4 @@
-# Submodular Utilities
+# SubmodularUtilities.jl
 
 **Documentation can be found at** [![DOI](img/docs-latest-blue.svg)](https://lchen91.github.io/Submodular_Utilities/latest/index.html).
 
