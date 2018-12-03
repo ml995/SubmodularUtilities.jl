@@ -1,4 +1,4 @@
-push!(LOAD_PATH, "../src")
+push!(LOAD_PATH, "src")
 using Documenter, SubmodularUtilities
 
 makedocs(sitename="SubmodularUtilities.jl", doctest = false)
