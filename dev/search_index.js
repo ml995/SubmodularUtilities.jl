@@ -17,11 +17,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "#Getting-Started-1",
+    "page": "Home",
+    "title": "Getting Started",
+    "category": "section",
+    "text": "Our implementation was developed under Julia v0.7/v1.0."
+},
+
+{
     "location": "#Installation-1",
     "page": "Home",
     "title": "Installation",
     "category": "section",
     "text": "To install the package, in the package mode of Julia REPL, enter the following command add https://github.com/lchen91/SubmodularUtilities.jl."
+},
+
+{
+    "location": "#How-to-Cite-Submodular-Utilities-1",
+    "page": "Home",
+    "title": "How to Cite Submodular Utilities",
+    "category": "section",
+    "text": "If you use our code in your project, we would be grateful if you could cite"
+},
+
+{
+    "location": "#[![DOI](https://zenodo.org/badge/159565266.svg)](https://zenodo.org/badge/latestdoi/159565266)-1",
+    "page": "Home",
+    "title": "(Image: DOI)",
+    "category": "section",
+    "text": ""
 },
 
 {
