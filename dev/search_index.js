@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "SubmodularUtilities.jl",
     "title": "SubmodularUtilities.Constraint",
     "category": "type",
-    "text": "Constraint\n\nThe constraints are A*x sense b and lb <= x <= ub.  sense is a vector of constraint sense characters <, =, and >. A is a 2-dimensional array, which denotes the constraint matrix. b is the right-hand side vector.\n\n\n\n\n\n"
+    "text": "Constraint(A, sense, b, lb, ub)\n\nThe constraints are A*x sense b and lb <= x <= ub.  sense is a vector of constraint sense characters <, =, and >. A is a 2-dimensional array, which denotes the constraint matrix. b is the right-hand side vector.\n\n\n\n\n\n"
 },
 
 {
