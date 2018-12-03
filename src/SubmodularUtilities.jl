@@ -47,7 +47,7 @@ end
 
 export Constraint
 """
-    Constraint
+    Constraint(A, sense, b, lb, ub)
 
 The constraints are A*x sense b and lb <= x <= ub. 
 `sense` is a vector of constraint sense characters `<`, `=`, and `>`.
