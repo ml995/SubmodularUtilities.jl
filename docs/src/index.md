@@ -2,7 +2,7 @@
 
 ## Installation
 
-To install the package, in the package mode, enter the following command `add https://github.com/lchen91/SubmodularUtilities.jl`.
+To install the package, in the package mode of Julia REPL, enter the following command `add https://github.com/lchen91/SubmodularUtilities.jl`.
 
 ## Maximization
 
