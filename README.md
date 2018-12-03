@@ -1,6 +1,6 @@
 # SubmodularUtilities.jl
 
-**Documentation can be found at** [![DOI](img/docs-latest-blue.svg)](https://lchen91.github.io/Submodular_Utilities/latest/index.html).
+**Documentation can be found at** [![DOI](img/docs-latest-blue.svg)](https://lchen91.github.io/SubmodularUtilities.jl/latest/index.html).
 
 Our implementation was developed under Julia v0.7/v1.0.
 
