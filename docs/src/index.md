@@ -1,5 +1,9 @@
 # SubmodularUtilities.jl
 
+## Installation
+
+To install the package, in the package mode, enter the following command `add https://github.com/lchen91/SubmodularUtilities.jl`.
+
 ## Maximization
 
 This subset contains functions related to submodular maximization.
